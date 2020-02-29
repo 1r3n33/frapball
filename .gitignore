@@ -1,0 +1,6 @@
+# Generated files
+obj/*
+*.gb
+
+# IDE files
+.vscode/*
