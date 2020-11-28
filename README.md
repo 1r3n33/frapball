@@ -2,6 +2,13 @@
 
 GB homebrew revisiting Pong.
 
+![Build](https://github.com/1r3n33/frapball/workflows/Frapball%20CI/badge.svg)
+[![Download](https://img.shields.io/badge/download-latest-blue)](https://github.com/1r3n33/frapball/releases/latest)
+
+![Titlescreen](./screenshots/titlescreen.bmp)
+![Level1](./screenshots/level1.bmp)
+![Level2](./screenshots/level2.bmp)
+
 ## Installation on Linux
 
 ### Wine
@@ -13,6 +20,15 @@ Install [Wine](https://www.winehq.org/) to properly run the tools:
 ```bash
 $ sudo apt-get install wine
 ```
+
+### sdcc
+
+1. Install the [sdcc](http://sdcc.sourceforge.net/snap.php#Linux) compiler.
+
+2. Add the `sdcc` executable to the `PATH` environment variable:
+   ```bash
+   $ export PATH=$PATH:<full_path_to>/sdcc/bin
+   ```
 
 ### gbdk-n
 
@@ -32,21 +48,10 @@ $ sudo apt-get install wine
    $ export GBDKDIR=<full_path_to>/gbdk-n
    ```
 
-### sdcc
-
-1. Install the [sdcc](http://sdcc.sourceforge.net/snap.php#Linux) compiler.
-
-2. Add the `sdcc` executable to the `PATH` environment variable:
-   ```bash
-   $ export PATH=$PATH:<full_path_to>/sdcc/bin
-   ```
-
 ### gbtd22
 
-Install [gbtd22](http://www.devrs.com/gb/hmgd/gbtd.html) to edit `.gbr` files in the `gfx` folder and export bitmaps.
-
-## Emulators
+Install [gbtd22](http://www.devrs.com/gb/hmgd/gbtd.html) image editor to edit `.gbr` files in the `gfx` folder and export bitmaps.
 
 ### bgb
 
-Install [bgb](http://bgb.bircd.org/) to play and debug the game.
+Install [bgb](http://bgb.bircd.org/) emulator to play and debug the game.
