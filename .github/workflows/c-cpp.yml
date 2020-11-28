@@ -1,0 +1,51 @@
+name: Frapball CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install SDCC compiler
+      run: |
+        wget --content-disposition -c https://sourceforge.net/projects/sdcc/files/sdcc-linux-amd64/4.0.0/sdcc-4.0.0-amd64-unknown-linux2.5.tar.bz2 -O sdcc.tar.bz2
+        tar -xf sdcc.tar.bz2
+    - name: Install gbdk-n SDK
+      run: |
+        export PATH=$PATH:$(pwd)/sdcc-4.0.0/bin
+        git clone https://github.com/andreasjhkarlsson/gbdk-n.git
+        pushd gbdk-n
+        make
+        popd
+    - name: Build Frapball
+      run: |
+        export PATH=$PATH:$(pwd)/sdcc-4.0.0/bin
+        export GBDKDIR=$(pwd)/gbdk-n
+        make
+    - name: Create release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        draft: false
+        prerelease: false
+    - name: Upload rom
+      id: upload-release-asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./game.gb
+        asset_name: game.gb
+        asset_content_type: application/octet-stream
